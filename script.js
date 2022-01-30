@@ -42,7 +42,25 @@ let questions = [
 function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
 
 	function showQuestions(questions, quizContainer){
-		// code will go here
+        let output = [];
+        let answers;
+        for(var i=0; i<questions.length; i++){
+		
+            // first reset the list of answers
+            answers = [];
+    
+            // for each available answer to this question...
+            for(letter in questions[i].answers){
+    
+                // ...add an html radio button
+                answers.push(
+                    '<label>'
+                        + '<input type="radio" name="question'+i+'" value="'+letter+'">'
+                        + letter + ': '
+                        + questions[i].answers[letter]
+                    + '</label>'
+                );
+            }
 	}
 
 	function showResults(questions, quizContainer, resultsContainer){
