@@ -1,6 +1,6 @@
 let questions = [
   {
-    question: "What is 10/2?",
+    questions: "What is 10/2?",
     image: "#",
     answers: {
       a: "3",
@@ -13,7 +13,7 @@ let questions = [
   },
 
   {
-    question: "What is 100/20?",
+    questions: "What is 100/20?",
     image: "#",
     answers: {
       a: "3",
@@ -26,7 +26,7 @@ let questions = [
   },
 
   {
-    question: "What is 150/3?",
+    questions: "What is 150/3?",
     image: "#",
     answers: {
       a: "50",
@@ -61,16 +61,61 @@ function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
                     + '</label>'
                 );
             }
+            output.push(
+                '<div class="quest-image">' + questions[i].question + '</div>'
+                + '<div class="ans">' + answers.join('') + '</div>'
+            );
+
+            quizContainer.innerHTML = output.join('');
 	}
+
+    showQuestions(questions, quizContainer);
+
+    
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 
 	function showResults(questions, quizContainer, resultsContainer){
 		// code will go here
+        	// gather answer containers from our quiz
+	var answerContainers = quizContainer.querySelectorAll('.answers');
+	
+	// keep track of user's answers
+	var userAnswer = '';
+	var numCorrect = 0;
+	
+	// for each question...
+	for(var i=0; i<questions.length; i++){
+
+		// find selected answer
+		userAnswer = (answerContainers[i].querySelector('input[name=question'+i+']:checked')||{}).value;
+		
+		// if answer is correct
+		if(userAnswer===questions[i].correctAnswer){
+			// add to the number of correct answers
+			numCorrect++;
+			
+			// color the answers green
+			answerContainers[i].style.color = 'lightgreen';
+		}
+		// if answer is wrong or blank
+		else{
+			// color the answers red
+			answerContainers[i].style.color = 'red';
+		}
+	}
+
+	// show number of correct answers out of total
+	resultsContainer.innerHTML = numCorrect + ' out of ' + questions.length;
+}
 	}
 
 	// show the questions
-	showQuestions(questions, quizContainer);
+	// showQuestions(questions, quizContainer);
 
-	// when user clicks submit, show results
+	// // when user clicks submit, show results
 	submitButton.onclick = function(){
 		showResults(questions, quizContainer, resultsContainer);
-	}
+    }
+  }
+}
